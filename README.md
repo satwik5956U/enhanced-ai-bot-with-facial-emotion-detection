@@ -16,7 +16,8 @@ Welcome to my awesome project! This project does emotion detection with facial e
    ```bash
    pip install -r requirements1.txt
    python manage.py runserver
-4. Installing dependancies for project 2:
+4. Open another prompt for project 2 and navigate to translate folder
+5. Installing dependancies for project 2:
    ```bash
    pip install -r requirements1.txt
    python manage.py runserver 9000
