@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatter</title>
+</head>
+<body>
+    <form id="formid" action="http://127.0.0.1:9000/respond" method="get">
+        <input type="text" value={{res}} id="inptext" name="inptext"/>
+        <input type="text" value={{lang}} id="lang" name="lang"/>
+        <input type="submit" value="submit" />
+    </form>
+    <script>
+        var txt=document.getElementById("inptext").value;
+        var txt1=txt.replaceAll("_"," ")
+        console.log(txt1);
+        document.getElementById("inptext").value=txt1;
+        var f=document.getElementById("formid");
+        f.submit();
+    </script>
+</body>
+</html>

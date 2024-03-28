@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech page</title>
+    <style>
+        *{
+            background-image:url(../static/bg2.jpg);
+            color:white;
+        }
+        table{
+            align-items: center;
+            text-align: center;
+        }
+        option{
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <form action="translate">
+    <div class="words1" contenteditable>
+        <table>
+            <tr>
+                <td>
+                    <label>
+                        Text you have entered is:
+                    </label>
+                </td>
+                <td class="words">
+                    <textarea rows="5" cols="80" id="p" name="inptext"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        Choose a language to which given text to be converted:
+                    </label>
+                </td>
+                <td>
+                    <select id="lang" name="lang">
+                        <option selected>english</option>
+                        <option>
+                            hindi
+                        </option>
+                        <option>
+                            telugu
+                        </option>
+                        <option>
+                            malayalam
+                        </option>
+                        <option>
+                            tamil
+                        </option>
+                        <option>
+                            kannada
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="send"/>
+                </td>
+            </tr>
+        </table>
+	</div>
+	<script>
+		var speech = true;
+		window.SpeechRecognition = window.SpeechRecognition|| window.webkitSpeechRecognition;
+
+		const recognition = new SpeechRecognition();
+		recognition.interimResults = true;
+		const words = document.querySelector('.words');
+		words.appendChild(p);
+
+		recognition.addEventListener('result', e => {
+			var transcript = Array.from(e.results)
+				.map(result => result[0])
+				.map(result => result.transcript)
+				.join('')
+
+			document.getElementById("p").value = transcript;
+			console.log(transcript);
+		});
+		
+		if (speech == true) {
+			recognition.start();
+			recognition.addEventListener('end', recognition.start);
+		}
+	</script>
+    </form>
+</body>
+</html>

