@@ -20,3 +20,10 @@ Welcome to my awesome project! This project does emotion detection with facial e
    ```bash
    pip install -r requirements1.txt
    python manage.py runserver 9000
+### Starting the application
+
+
+1. start the server 1:
+
+   Press CTRL and click on 9000 port link then add index1 to the url
+
