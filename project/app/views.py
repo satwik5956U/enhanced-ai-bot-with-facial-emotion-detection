@@ -90,7 +90,7 @@ def emotion(request):
 
     camera.release()
     cv2.destroyAllWindows()
-openai.api_key = "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"
+#openai.api_key = "your api key here"
 def get_response(request,chat_text):
     # Assuming 'emotion' is a function that extracts emotion from the request
     emot=emotion(request)
