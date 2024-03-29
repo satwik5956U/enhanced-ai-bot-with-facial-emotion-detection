@@ -27,4 +27,6 @@ Welcome to my awesome project! This project does emotion detection with facial e
 1. start the server 1:
 
    Press CTRL and click on 9000 port link then add index1 to the url
+# Deployment
+The application is deployed at [symptom-disease](https://symptom-disease-1.onrender.com/).
 
