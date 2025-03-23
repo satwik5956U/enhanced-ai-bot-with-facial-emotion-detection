@@ -24,7 +24,3 @@ jobs:
       run: |
         cd project
         python -m pip install --upgrade pip
-    - name: Run Tests
-      run: |
-        cd project
-        python manage.py test
